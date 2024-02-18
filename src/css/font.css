@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'LiquidCrystalExBold';
+  src: url('../font/LiquidCrystal-ExBold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DigitalBold';
+  src: url('../font/DS-DIGIB.TTF') format('truetype');
+}

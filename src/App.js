@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, createContext } from 'react';
+import MainComponent from './component/MainComponent';
+import i18next from './locales/i18n';
+import { getLang } from './locales/i18n';
+
+export const AppContext = createContext();
 
 function App() {
+  const [week, setWeek] = useState(0);
+  const [date, setDate] = useState('0000-00-00');
+  const [time, setTime] = useState(null);
+
+  useEffect(() => {
+    const getFormatNumber = (text) => {
+      return text.toString().padStart(2, '0');
+    };
+
+    console.log(getLang());
+    i18next.changeLanguage(getLang());
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      setWeek(now.getDay());
+      setDate(`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
+      setTime(
+        `${getFormatNumber(now.getHours())}:${getFormatNumber(now.getMinutes())}:${getFormatNumber(now.getSeconds())}`
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{ week, date, time }}>
+      <MainComponent></MainComponent>
+    </AppContext.Provider>
   );
 }
 
