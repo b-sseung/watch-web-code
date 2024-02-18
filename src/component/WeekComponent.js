@@ -8,7 +8,6 @@ const WeekItem = ({ word, color }) => {
 };
 
 const WeekComponent = React.memo(({ week, isMatch }) => {
-  console.log('createWeek');
   const divStyle = {
     flexDirection: isMatch ? 'column' : 'row',
     alignItems: isMatch ? 'end' : 'center',

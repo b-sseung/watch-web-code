@@ -16,6 +16,6 @@ const resources = {
   ko: { translation: translationKo },
 };
 
-i18next.use(initReactI18next).init({ resources, lng: 'jp', interpolation: { escapeValue: false } });
+i18next.use(initReactI18next).init({ resources, lng: 'jp', fallbackLng: 'jp', interpolation: { escapeValue: false } });
 
 export default i18next;

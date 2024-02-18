@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useRef } from 'react';
 import { AppContext } from '../App';
 import { useTranslation } from 'react-i18next';
+import { getSpeech } from '../locales/voice';
 import { DigitalFontDiv, FlexColDiv, FlexRowDiv } from '../css/CustomTag';
 
 const TimeItem = ({ base, time }) => {
@@ -47,7 +48,7 @@ const TimeItem = ({ base, time }) => {
 
 const TimeComponent = () => {
   const { time } = useContext(AppContext);
-  const [hour, minute] = time.split(':');
+  const [, minute] = time.split(':');
   const { t } = useTranslation();
   const [speakTime, setSpeakTime] = useState(`${minute}${t('minute')}`);
   const speak = useRef();
@@ -71,20 +72,7 @@ const TimeComponent = () => {
   });
 
   const onClickEvent = () => {
-    if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
-      alert('이 브라우저는 음성 합성을 지원하지 않습니다.');
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const speechMsg = new SpeechSynthesisUtterance();
-    speechMsg.rate = 1; // 속도: 0.1 ~ 10
-    speechMsg.pitch = 1; // 음높이: 0 ~ 2
-    speechMsg.lang = navigator.language;
-    speechMsg.text = speak.value;
-
-    window.speechSynthesis.speak(speechMsg);
+    getSpeech(speak.value);
     setSpeakTime(speak.value);
   };
 

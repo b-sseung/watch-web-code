@@ -15,7 +15,6 @@ function App() {
       return text.toString().padStart(2, '0');
     };
 
-    console.log(getLang());
     i18next.changeLanguage(getLang());
 
     const interval = setInterval(() => {
